@@ -15,7 +15,7 @@ services:
       outline-minio:
         condition: service_started
     volumes:
-      - ./data/outline:/var/lib/outline/data
+      - /mnt/docker-data/productivity/outline:/var/lib/outline/data
     networks:
       - dockernet
 
@@ -32,7 +32,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_DB: outline
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - /mnt/docker-data/productivity/outline-pgsql:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U outline -d outline" ]
       interval: 10s
@@ -47,7 +47,7 @@ services:
     container_name: outline-redis
     restart: always
     volumes:
-      - ./data/redis:/data
+      - /mnt/docker-data/productivity/outline-redis:/data
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
@@ -69,7 +69,7 @@ services:
       MINIO_ROOT_USER_FILE: /run/secrets/minio_root_user
       MINIO_ROOT_PASSWORD_FILE: /run/secrets/minio_root_password
     volumes:
-      - ./data/minio:/data
+      - /mnt/docker-data/productivity/outline-minio:/data
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -77,12 +77,12 @@ services:
       - dockernet
 
   # --- OIDC Provider ---
-  authelia:
+  outline-authelia:
     image: authelia/authelia:latest
-    container_name: productivity-authelia
+    container_name: outline-authelia
     restart: always
     volumes:
-      - ./authelia:/config
+      - /mnt/docker-data/productivity/outline-authelia:/config
     ports:
       - "9091:9091"
     networks:
