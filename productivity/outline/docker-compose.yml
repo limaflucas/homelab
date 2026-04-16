@@ -18,7 +18,7 @@ services:
       - /mnt/docker-data/productivity/outline:/var/lib/outline/data
       - ./outline-pgsql.crt:/etc/ssl/certs/db-ca.crt:ro
     environment:
-      - PGSSLROOTCERT=/etc/ssl/certs/db-ca.crt
+      - PGSSLROOTCERT=/etc/ssl/certs/db-ca.crt.crt
     networks:
       - dockernet
 
@@ -38,11 +38,7 @@ services:
       - /mnt/docker-data/productivity/outline-pgsql:/var/lib/postgresql/data
       - ./outline-pgsql.crt:/var/lib/postgresql/server.crt:ro
       - ./outline-pgsql.key:/var/lib/postgresql/server.key:ro
-    command:
-      - "postgres"
-      - "-c" "ssl=on"
-      - "-c" "ssl_cert_file=/var/lib/postgresql/server.crt"
-      - "-c" "ssl_key_file=/var/lib/postgresql/server.key"
+    command: "postgres -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U outline -d outline" ]
       interval: 10s
@@ -97,6 +93,16 @@ services:
       - "9091:9091"
     networks:
       - dockernet
+    environment:
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: '/run/secrets/authelia_jwt_secret'
+      AUTHELIA_SESSION_SECRET_FILE: '/run/secrets/authelia_session_secret'
+      AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: '/run/secrets/authelia_storage_password'
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/authelia_storage_encryption_key'
+    secrets:
+      - authelia_jwt_secret
+      - authelia_session_secret
+      - authelia_storage_password
+      - authelia_storage_encryption_key
 
 networks:
   dockernet:
@@ -111,3 +117,11 @@ secrets:
     file: ./secrets/minio_root_user.txt
   minio_root_password:
     file: ./secrets/minio_root_password.txt
+  authelia_jwt_secret:
+    file: ./secrets/authelia_jwt_secret
+  authelia_session_secret:
+    file: ./secrets/authelia_session_secret
+  authelia_storage_password:
+    file: ./secrets/authelia_storage_password
+  authelia_storage_encryption_key:
+    file: ./secrets/authelia_storage_encryption_key
