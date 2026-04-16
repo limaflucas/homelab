@@ -1,5 +1,7 @@
 services:
   # --- Wiki ---
+  # It requires the .env configuration file
+  # See: https://docs.getoutline.com/s/hosting/doc/docker-7pfeLP5a8t
   outline:
     image: docker.getoutline.com/outlinewiki/outline:latest
     container_name: outline
@@ -14,11 +16,15 @@ services:
         condition: service_healthy
       outline-minio:
         condition: service_started
+      outline-authelia:
+        condition: service_started
     volumes:
       - /mnt/docker-data/productivity/outline:/var/lib/outline/data
-      - ./outline-pgsql.crt:/etc/ssl/certs/db-ca.crt:ro
+      # Required for self-signed certificates
+      # cat ./certs/outline-pgsql.crt ./certs/outline-authelia.crt > ./certs/combined-ca.crt
+      - ./certs/combined-ca.crt:/etc/ssl/certs/combined-ca.crt
     environment:
-      - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/db-ca.crt
+      - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/combined-ca.crt
     networks:
       - dockernet
 
@@ -36,8 +42,8 @@ services:
       POSTGRES_DB: outline
     volumes:
       - /mnt/docker-data/productivity/outline-pgsql:/var/lib/postgresql/data
-      - ./outline-pgsql.crt:/var/lib/postgresql/server.crt:ro
-      - ./outline-pgsql.key:/var/lib/postgresql/server.key:ro
+      - ./certs/outline-pgsql.crt:/var/lib/postgresql/server.crt:ro
+      - ./certs/outline-pgsql.key:/var/lib/postgresql/server.key:ro
     command: "postgres -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U outline -d outline" ]
@@ -83,6 +89,8 @@ services:
       - dockernet
 
   # --- OIDC Provider ---
+  # It requires configuration.yml and users_database.yml files
+  # See: https://www.authelia.com/integration/deployment/docker/
   outline-authelia:
     image: authelia/authelia:latest
     container_name: outline-authelia
@@ -93,16 +101,6 @@ services:
       - "9091:9091"
     networks:
       - dockernet
-    environment:
-      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: '/run/secrets/authelia_jwt_secret'
-      AUTHELIA_SESSION_SECRET_FILE: '/run/secrets/authelia_session_secret'
-      AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: '/run/secrets/authelia_storage_password'
-      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/authelia_storage_encryption_key'
-    secrets:
-      - authelia_jwt_secret
-      - authelia_session_secret
-      - authelia_storage_password
-      - authelia_storage_encryption_key
 
 networks:
   dockernet:
@@ -117,11 +115,3 @@ secrets:
     file: ./secrets/minio_root_user.txt
   minio_root_password:
     file: ./secrets/minio_root_password.txt
-  authelia_jwt_secret:
-    file: ./secrets/authelia_jwt_secret
-  authelia_session_secret:
-    file: ./secrets/authelia_session_secret
-  authelia_storage_password:
-    file: ./secrets/authelia_storage_password
-  authelia_storage_encryption_key:
-    file: ./secrets/authelia_storage_encryption_key
