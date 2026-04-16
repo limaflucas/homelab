@@ -16,6 +16,9 @@ services:
         condition: service_started
     volumes:
       - /mnt/docker-data/productivity/outline:/var/lib/outline/data
+      - ./outline-pgsql.crt:/etc/ssl/certs/db-ca.crt:ro
+    environment:
+      - PGSSLROOTCERT=/etc/ssl/certs/db-ca.crt
     networks:
       - dockernet
 
@@ -33,6 +36,13 @@ services:
       POSTGRES_DB: outline
     volumes:
       - /mnt/docker-data/productivity/outline-pgsql:/var/lib/postgresql/data
+      - ./outline-pgsql.crt:/var/lib/postgresql/server.crt:ro
+      - ./outline-pgsql.key:/var/lib/postgresql/server.key:ro
+    command:
+      - "postgres"
+      - "-c" "ssl=on"
+      - "-c" "ssl_cert_file=/var/lib/postgresql/server.crt"
+      - "-c" "ssl_key_file=/var/lib/postgresql/server.key"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U outline -d outline" ]
       interval: 10s
