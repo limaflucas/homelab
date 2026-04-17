@@ -1,0 +1,34 @@
+# Reverse Proxy
+
+This directory contains the configuration for the reverse proxy.
+
+## Tools Configured
+
+*   **Nginx Proxy Manager (NPM)**: A reverse proxy management system based on NGINX, with a clean web UI.
+*   **PostgreSQL**: The relational database used to store NPM's configuration.
+
+## Goal
+
+To easily expose web services on the network, manage domain routing, and handle SSL/TLS certificates (Let's Encrypt).
+
+## Usage in this Project
+
+NPM listens on the standard HTTP (`80`) and HTTPS (`443`) ports. It provides a web-based administration interface on port `81` to manage proxy hosts, redirection streams, and SSL certificates. The configuration is securely stored in the accompanying PostgreSQL database.
+
+## Installation Steps
+
+1.  Navigate to this directory:
+    ```bash
+    cd infra/proxy
+    ```
+2.  Create a `secrets` directory and the required secret files:
+    ```bash
+    mkdir -p secrets
+    echo "your_secure_db_password" > secrets/db_password.txt
+    echo "npm_user" > secrets/db_user.txt
+    ```
+3.  Start the proxy stack:
+    ```bash
+    docker compose up -d
+    ```
+4.  Access the Admin UI at `http://<your-server-ip>:81` to configure your proxies.
