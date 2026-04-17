@@ -4,7 +4,8 @@ Welcome to the Homelab project. This repository contains Docker Compose configur
 
 ## Directory Structure
 
-*   **[Infrastructure Management](./infra/management/README.md)**: Tools for managing the server and Docker containers (e.g., Komodo).
+*   **[Databases: MongoDB](./databases/mongodb/README.md)**: A centralized shared MongoDB database for use by other services.
+*   **[Infrastructure Management](./infra/management/README.md)**: Tools for managing the server and Docker containers (e.g., Komodo Core).
 *   **[Infrastructure Monitoring](./infra/monitoring/README.md)**: Observability stack for collecting and visualizing metrics and logs (Grafana, VictoriaMetrics, VictoriaLogs, Alloy).
 *   **[Infrastructure Proxy](./infra/proxy/README.md)**: Reverse proxy for managing access and SSL certificates (Nginx Proxy Manager).
 *   **[Productivity: Outline](./productivity/outline/README.md)**: A modern team knowledge base and wiki (Outline, PostgreSQL, Redis, MinIO, Authelia).

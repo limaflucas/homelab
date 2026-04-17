@@ -1,0 +1,19 @@
+services:
+  komodo-core:
+    image: ghcr.io/moghtech/komodo-core:latest
+    container_name: komodo-core
+    restart: unless-stopped
+    ports:
+      - "9120:9120"
+    env_file: .env
+    environment:
+      KOMODO_DATABASE_ADDRESS: mongodb:27017
+    volumes:
+      - /mnt/docker-data/infra/komodo/keys:/config/keys
+      - /mnt/docker-data/infra/komodo/backups:/backups
+    networks:
+      - dockernet
+
+networks:
+  dockernet:
+    external: true

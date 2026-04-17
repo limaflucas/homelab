@@ -1,0 +1,29 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    command: --quiet --wiredTigerCacheSizeGB 0.25
+    secrets:
+      - db_password
+      - db_user
+    environment:
+      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/db_user
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/db_password
+    volumes:
+      - /mnt/docker-data/databases/mongodb/data:/data/db
+      - /mnt/docker-data/databases/mongodb/config:/data/configdb
+    ports:
+      - "27017:27017"
+    networks:
+      - dockernet
+
+networks:
+  dockernet:
+    external: true
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  db_user:
+    file: ./secrets/db_user.txt
