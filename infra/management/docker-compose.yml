@@ -6,11 +6,10 @@ services:
     ports:
       - "9120:9120"
     env_file: komodo.env
-    environment:
-      KOMODO_DATABASE_ADDRESS: mongodb:27017
     volumes:
       - /mnt/docker-data/infra/komodo/keys:/config/keys
       - /mnt/docker-data/infra/komodo/backups:/backups
+      - ./certs:/usr/local/share/ca-certificates
     networks:
       - dockernet
 
