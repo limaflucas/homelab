@@ -6,6 +6,8 @@ services:
     ports:
       - "9120:9120"
     env_file: komodo.env
+    environment:
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
     volumes:
       - /mnt/docker-data/infra/komodo/keys:/config/keys
       - /mnt/docker-data/infra/komodo/backups:/backups
@@ -13,7 +15,7 @@ services:
     networks:
       - dockernet
     post_start:
-      - command: update-ca-certificates
+      - command: update-ca-certificates && core
         user: root
 
 networks:
