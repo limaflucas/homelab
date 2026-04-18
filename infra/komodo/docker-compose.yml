@@ -14,9 +14,6 @@ services:
       - ./certs/homelab-root-ca.crt:/usr/local/share/ca-certificates/homelab-root-ca.crt:ro
     networks:
       - dockernet
-    post_start:
-      - command: update-ca-certificates && core
-        user: root
 
   komodo-periphery:
     image: ghcr.io/moghtech/komodo-periphery:latest
