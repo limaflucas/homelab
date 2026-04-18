@@ -18,7 +18,7 @@ services:
         condition: service_started
     volumes:
       - /mnt/docker-data/apps/outline:/var/lib/outline/data
-      - ./certs/combined-ca.crt:/etc/ssl/certs/combined-ca.crt
+      - ./certs/combined-ca.crt:/etc/ssl/certs/combined-ca.crt:ro
     environment:
       - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/combined-ca.crt
     deploy:
