@@ -7,7 +7,7 @@ services:
       - 3000:3000
     env_file: .env
     volumes:
-      - /mnt/docker-data/infra/grafana:/var/lib/grafana
+      - /mnt/docker-data/apps/grafana/grafana:/var/lib/grafana
       - ./provisioning:/etc/grafana/provisioning
     deploy:
       resources:
@@ -23,7 +23,7 @@ services:
     ports:
       - 8428:8428
     volumes:
-      - /mnt/docker-data/infra/victoria-metrics:/storage
+      - /mnt/docker-data/apps/grafana/victoria-metrics:/storage
     command:
       - "--storageDataPath=/storage"
       - "--retentionPeriod=7d"
@@ -42,7 +42,7 @@ services:
     ports:
       - 9428:9428
     volumes:
-      - /mnt/docker-data/infra/victoria-logs:/storage
+      - /mnt/docker-data/apps/grafana/victoria-logs:/storage
     command:
       - "--storageDataPath=/storage"
       - "--retentionPeriod=7d" 
@@ -79,7 +79,7 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
       - /dev/disk:/dev/disk:ro
       - /proc:/proc:ro
-      - /mnt/docker-data/infra/alloy:/var/lib/alloy/data
+      - /mnt/docker-data/apps/grafana/alloy:/var/lib/alloy/data
     entrypoint:
       - /usr/bin/alloy
       - run

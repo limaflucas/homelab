@@ -9,8 +9,8 @@ services:
     environment:
       - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
     volumes:
-      - /mnt/docker-data/infra/komodo/keys:/config/keys
-      - /mnt/docker-data/infra/komodo/backups:/backups
+      - /mnt/docker-data/apps/komodo/keys:/config/keys
+      - /mnt/docker-data/apps/komodo/backups:/backups
       - ./certs/homelab-root-ca.crt:/usr/local/share/ca-certificates/homelab-root-ca.crt:ro
     deploy:
       resources:
@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     env_file: komodo.env
     volumes:
-      - /mnt/docker-data/infra/periphery/keys:/config/keys
+      - /mnt/docker-data/apps/komodo/periphery/keys:/config/keys
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc:/proc
       - /etc/komodo:/etc/komodo

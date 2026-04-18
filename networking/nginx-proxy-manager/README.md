@@ -1,4 +1,4 @@
-# Reverse Proxy
+# Networking: Nginx Proxy Manager
 
 This directory contains the configuration for the reverse proxy.
 

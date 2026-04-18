@@ -1,6 +1,6 @@
-# Infrastructure Management
+# Apps: Komodo
 
-This directory contains the configuration for the infrastructure management tools in this homelab.
+This directory contains the configuration for the server and container management tools in this homelab.
 
 ## Tools Configured
 

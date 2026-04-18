@@ -1,4 +1,4 @@
-# Productivity: Outline Wiki
+# Apps: Outline Wiki
 
 This directory contains the configuration for the Outline knowledge base.
 

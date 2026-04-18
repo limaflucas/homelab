@@ -1,4 +1,4 @@
-# Infrastructure Monitoring
+# Apps: Grafana
 
 This directory contains the configuration for the monitoring and observability stack.
 

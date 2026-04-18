@@ -17,8 +17,8 @@ services:
       DB_POSTGRES_USER__FILE: /run/secrets/db_user
       DB_POSTGRES_PASSWORD__FILE: /run/secrets/db_password
     volumes:
-      - /mnt/docker-data/infra/npm:/data
-      - /mnt/docker-data/infra/letsencrypt:/etc/letsencrypt
+      - /mnt/docker-data/networking/nginx-proxy-manager/npm:/data
+      - /mnt/docker-data/networking/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     deploy:
       resources:
         limits:
@@ -42,7 +42,7 @@ services:
       POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     volumes:
-      - /mnt/docker-data/infra/postgresql:/var/lib/postgresql/data
+      - /mnt/docker-data/networking/nginx-proxy-manager/postgresql:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U npm -d npm" ]
       interval: 10s

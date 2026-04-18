@@ -17,7 +17,7 @@ services:
       outline-minio:
         condition: service_started
     volumes:
-      - /mnt/docker-data/productivity/outline:/var/lib/outline/data
+      - /mnt/docker-data/apps/outline:/var/lib/outline/data
       - ./certs/combined-ca.crt:/etc/ssl/certs/combined-ca.crt
     environment:
       - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/combined-ca.crt
@@ -42,7 +42,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_DB: outline
     volumes:
-      - /mnt/docker-data/productivity/outline-pgsql:/var/lib/postgresql/data
+      - /mnt/docker-data/apps/outline-pgsql:/var/lib/postgresql/data
       - ./certs/outline-pgsql.crt:/var/lib/postgresql/server.crt:ro
       - ./certs/outline-pgsql.key:/var/lib/postgresql/server.key:ro
     command: "postgres -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key"
@@ -65,7 +65,7 @@ services:
     container_name: outline-redis
     restart: always
     volumes:
-      - /mnt/docker-data/productivity/outline-redis:/data
+      - /mnt/docker-data/apps/outline-redis:/data
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
@@ -92,7 +92,7 @@ services:
       MINIO_ROOT_USER_FILE: /run/secrets/minio_root_user
       MINIO_ROOT_PASSWORD_FILE: /run/secrets/minio_root_password
     volumes:
-      - /mnt/docker-data/productivity/outline-minio:/data
+      - /mnt/docker-data/apps/outline-minio:/data
     ports:
       - "9000:9000"
       - "9001:9001"
