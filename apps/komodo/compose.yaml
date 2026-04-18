@@ -6,8 +6,6 @@ services:
     ports:
       - "9120:9120"
     env_file: komodo.env
-    environment:
-      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
     volumes:
       - /mnt/docker-data/apps/komodo/keys:/config/keys
       - /mnt/docker-data/apps/komodo/backups:/backups
@@ -30,10 +28,10 @@ services:
     restart: unless-stopped
     env_file: komodo.env
     volumes:
-      - /mnt/docker-data/apps/komodo/periphery/keys:/config/keys
+      - /mnt/docker-data/apps/periphery/keys:/config/keys
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc:/proc
-      - /etc/komodo:/etc/komodo
+      - /opt/komodo:/opt/komodo
     deploy:
       resources:
         limits:

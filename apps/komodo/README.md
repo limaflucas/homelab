@@ -46,7 +46,7 @@ Komodo is split into Core and Periphery. In this project:
     PERIPHERY_CONNECT_AS=docker-vm
     PERIPHERY_ONBOARDING_KEY=YOUR_ONBOARDING_KEY
     PERIPHERY_CORE_PUBLIC_KEYS=file:/config/keys/core.pub
-    PERIPHERY_ROOT_DIRECTORY=/etc/komodo
+    PERIPHERY_ROOT_DIRECTORY=/opt/komodo
     EOF
     ```
     *Note: Replace `password`, `secrete`, `YOUR_ONBOARDING_KEY`, and URLs as necessary for your environment. Generate the onboarding key from the Komodo Core UI after logging in.*
