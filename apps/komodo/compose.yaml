@@ -12,8 +12,16 @@ services:
       - /mnt/docker-data/infra/komodo/keys:/config/keys
       - /mnt/docker-data/infra/komodo/backups:/backups
       - ./certs/homelab-root-ca.crt:/usr/local/share/ca-certificates/homelab-root-ca.crt:ro
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
     networks:
       - dockernet
+    post_start:
+      - command: update-ca-certificates && core
+        user: root
 
   komodo-periphery:
     image: ghcr.io/moghtech/komodo-periphery:2.1
@@ -26,6 +34,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc:/proc
       - /etc/komodo:/etc/komodo
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
     networks:
       - dockernet
     depends_on:

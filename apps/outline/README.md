@@ -21,7 +21,7 @@ Outline is configured as a comprehensive stack. It relies on Postgres for relati
 
 1.  Navigate to this directory:
     ```bash
-    cd productivity/outline
+    cd apps/outline
     ```
 2.  Create the `secrets` directory and populate the required files:
     ```bash

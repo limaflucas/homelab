@@ -21,9 +21,9 @@ To collect, store, and visualize metrics and logs from the host system and runni
 
 ## Installation Steps
 
-1.  Navigate to this directory:
+2.  Navigate to this directory:
     ```bash
-    cd infra/monitoring
+    cd apps/grafana
     ```
 2.  Review and customize `config.alloy` and files in `provisioning/` if necessary.
 3.  Start the stack:

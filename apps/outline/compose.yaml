@@ -1,6 +1,6 @@
 services:
   # --- Wiki ---
-  # It requires the .env configuration file
+  # It requires the outline.env configuration file
   # See: https://docs.getoutline.com/s/hosting/doc/docker-7pfeLP5a8t
   outline:
     image: docker.getoutline.com/outlinewiki/outline:latest
@@ -21,6 +21,11 @@ services:
       - ./certs/combined-ca.crt:/etc/ssl/certs/combined-ca.crt
     environment:
       - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/combined-ca.crt
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
     networks:
       - dockernet
 
@@ -46,6 +51,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
     networks:
       - dockernet
 
@@ -61,6 +71,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
     networks:
       - dockernet
 
@@ -81,6 +96,11 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
     networks:
       - dockernet
 

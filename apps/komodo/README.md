@@ -22,7 +22,7 @@ Komodo is split into Core and Periphery. In this project:
 1.  Ensure that the shared **MongoDB** service (in the `/mongodb` directory) is running and you have its credentials.
 2.  Navigate to this directory:
     ```bash
-    cd infra/komodo
+    cd apps/komodo
     ```
 3.  Create a `komodo.env` file for the Komodo configuration and credentials:
     ```bash

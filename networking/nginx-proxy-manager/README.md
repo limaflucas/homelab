@@ -19,7 +19,7 @@ NPM listens on the standard HTTP (`80`) and HTTPS (`443`) ports. It provides a w
 
 1.  Navigate to this directory:
     ```bash
-    cd infra/proxy
+    cd networking/nginx-proxy-manager
     ```
 2.  Create a `secrets` directory and the required secret files:
     ```bash
