@@ -42,7 +42,7 @@ services:
       POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     volumes:
-      - /mnt/docker-data/networking/nginx-proxy-manager/postgresql:/var/lib/postgresql/data
+      - /mnt/docker-data/networking/npm-pgsql:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U npm -d npm" ]
       interval: 10s
@@ -57,7 +57,7 @@ services:
       - dockernet
 
 networks:
-  dockernet: 
+  dockernet:
     external: true
 
 secrets:
