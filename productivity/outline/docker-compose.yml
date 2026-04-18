@@ -84,20 +84,6 @@ services:
     networks:
       - dockernet
 
-  # --- OIDC Provider ---
-  # It requires configuration.yml and users_database.yml files
-  # See: https://www.authelia.com/integration/deployment/docker/
-  outline-authelia:
-    image: authelia/authelia:latest
-    container_name: outline-authelia
-    restart: always
-    volumes:
-      - /mnt/docker-data/productivity/outline-authelia:/config
-    ports:
-      - "9091:9091"
-    networks:
-      - dockernet
-
 networks:
   dockernet:
     external: true
