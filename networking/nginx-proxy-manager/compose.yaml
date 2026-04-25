@@ -16,9 +16,11 @@ services:
       DB_POSTGRES_PORT: '5432'
       DB_POSTGRES_USER__FILE: /run/secrets/db_user
       DB_POSTGRES_PASSWORD__FILE: /run/secrets/db_password
+      LE_SERVER: 'https://stepca.homelab/acme/acme/directory'
     volumes:
       - /mnt/docker-data/networking/nginx-proxy-manager/npm:/data
       - /mnt/docker-data/networking/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - ./certs/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
     deploy:
       resources:
         limits:
@@ -26,6 +28,9 @@ services:
           memory: 512M
     networks:
       - dockernet
+    post_start:
+      - command: update-ca-certificates
+        user: root
     depends_on:
       npm-pgsql:
         condition: service_healthy
@@ -57,7 +62,7 @@ services:
       - dockernet
 
 networks:
-  dockernet: 
+  dockernet:
     external: true
 
 secrets:
